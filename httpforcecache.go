@@ -59,3 +59,8 @@ func NewMemoryCacheTransport() *Transport {
 	t := NewTransport(c)
 	return t
 }
+
+func (t *Transport) DeleteCache(req *http.Request) {
+	key := cacheKey(req)
+	t.Cache.Delete(key)
+}

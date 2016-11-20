@@ -105,6 +105,20 @@ func TestMultipleRequest(t *testing.T) {
 	}
 }
 
+func TestDeleteCache(t *testing.T) {
+	resetTest()
+	{
+		text := request(t, "/no-cache")
+		assert.Equal(t, "1", text)
+
+		req, _ := http.NewRequest("GET", s.server.URL+"/no-cache", nil)
+		s.transport.DeleteCache(req)
+
+		t2 := request(t, "/no-cache")
+		assert.Equal(t, "2", t2)
+	}
+}
+
 // do not caching error response
 func TestErrorPage(t *testing.T) {
 	resetTest()
